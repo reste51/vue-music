@@ -1,5 +1,6 @@
 <template>
-  <div id="app" @touchmove.prevent>
+  <div id="app"
+       @touchmove.prevent>
     <m-header></m-header>
     <tab></tab>
     <keep-alive>
@@ -10,18 +11,17 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import MHeader from 'components/m-header/m-header'
-  import Player from 'components/player/player'
-  import Tab from 'components/tab/tab'
-
-  export default {
-    components: {
-      MHeader,
-      Tab,
-      Player
-    }
+import MHeader from 'components/m-header/m-header'
+import Player from 'components/player/player'
+import Tab from 'components/tab/tab'
+// 测试 git 参数
+export default {
+  components: {
+    MHeader,
+    Tab,
+    Player
   }
+}
 </script>
 
-<style scoped lang="stylus" rel="stylesheet/stylus">
-</style>
+<style scoped lang="stylus" rel="stylesheet/stylus"></style>
