@@ -16,6 +16,7 @@
                   @click="showConfirm"><i class="icon-clear"></i></span>
           </h1>
         </div>
+        <!-- 滚动条 -->
         <scroll ref="listContent"
                 :data="sequenceList"
                 class="list-content"
@@ -23,10 +24,12 @@
           <transition-group ref="list"
                             name="list"
                             tag="ul">
+            <!-- 遍历顺序的歌单 -->
             <li :key="item.id"
                 class="item"
                 v-for="(item,index) in sequenceList"
                 @click="selectItem(item,index)">
+              <!-- 根据item 的标签， 是否为当前的播放的歌曲 -->
               <i class="current"
                  :class="getCurrentIcon(item)"></i>
               <span class="text">{{item.name}}</span>
@@ -87,6 +90,7 @@ export default {
   methods: {
     show () {
       this.showFlag = true
+      // 显示的时候, 滚动条 重新计算高度 并 滚动到当前的播放的歌曲位置
       setTimeout(() => {
         this.$refs.listContent.refresh()
         this.scrollToCurrent(this.currentSong)
@@ -108,16 +112,25 @@ export default {
       }
       return ''
     },
+    /*
+      选择歌单的某个歌曲
+      index 为顺序播放的 索引
+     */
     selectItem (item, index) {
+      // 播放模式为  随机模式, 需要去取 当前播放列表的索引值
       if (this.mode === playMode.random) {
         index = this.playlist.findIndex((song) => {
           return song.id === item.id
         })
       }
+      // 重置播放的 歌曲索引
       this.setCurrentIndex(index)
+      // 设置当前为 播放状态(暂停 模式下点击不会自动的播放)
       this.setPlayingState(true)
     },
+    // 滚动到 当前播放的列表
     scrollToCurrent (current) {
+      // 找到 顺序列表的索引
       const index = this.sequenceList.findIndex((song) => {
         return current.id === song.id
       })
