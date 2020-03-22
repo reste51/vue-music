@@ -16,7 +16,7 @@
                   @click="showConfirm"><i class="icon-clear"></i></span>
           </h1>
         </div>
-        <!-- 滚动条 -->
+        <!-- 滚动条_ 多个歌曲播放时__十二时二十一分 -->
         <scroll ref="listContent"
                 :data="sequenceList"
                 class="list-content"
@@ -32,7 +32,7 @@
               <!-- 根据item 的标签， 是否为当前的播放的歌曲 -->
               <i class="current"
                  :class="getCurrentIcon(item)"></i>
-              <span class="text">{{item.name}}</span>
+              <span class="text">{{item.name}}</span> <!-- 歌曲的中文 -->
               <span @click.stop="toggleFavorite(item)"
                     class="like">
                 <i :class="getFavoriteIcon(item)"></i>
@@ -106,6 +106,9 @@ export default {
       this.deleteSongList()
       this.hide()
     },
+    /**
+     * 判断是否为当前的播放歌曲
+     */
     getCurrentIcon (item) {
       if (this.currentSong.id === item.id) {
         return 'icon-play'
