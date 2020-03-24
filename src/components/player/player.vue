@@ -457,6 +457,7 @@ export default {
   },
   watch: {
     currentSong (newSong, oldSong) {
+      // 边界条件: 没有歌曲时
       if (!newSong.id) {
         return
       }

@@ -12,6 +12,7 @@
                :class="iconMode"
                @click="changeMode"></i>
             <span class="text">{{modeText}}</span>
+            <!-- 清除全部歌曲 -->
             <span class="clear"
                   @click="showConfirm"><i class="icon-clear"></i></span>
           </h1>
@@ -21,6 +22,7 @@
                 :data="sequenceList"
                 class="list-content"
                 :refreshDelay="refreshDelay">
+          <!--  tag说明渲染为 ul 标签-->
           <transition-group ref="list"
                             name="list"
                             tag="ul">
@@ -33,10 +35,12 @@
               <i class="current"
                  :class="getCurrentIcon(item)"></i>
               <span class="text">{{item.name}}</span> <!-- 歌曲的中文 -->
+              <!--切换 歌曲是否喜欢 -->
               <span @click.stop="toggleFavorite(item)"
                     class="like">
                 <i :class="getFavoriteIcon(item)"></i>
               </span>
+              <!-- 删除歌曲在列表中 -->
               <span @click.stop="deleteOne(item)"
                     class="delete">
                 <i class="icon-delete"></i>
@@ -56,6 +60,7 @@
           <span>关闭</span>
         </div>
       </div>
+      <!-- 清空列表确认框 -->
       <confirm ref="confirm"
                @confirm="confirmClear"
                text="是否清空播放列表"
@@ -74,6 +79,7 @@ import AddSong from 'components/add-song/add-song'
 import { playerMixin } from 'common/js/mixin'
 
 export default {
+  // 相同的代码 封装在一个 文件中，多个组件公用
   mixins: [playerMixin],
   data () {
     return {
@@ -137,10 +143,14 @@ export default {
       const index = this.sequenceList.findIndex((song) => {
         return current.id === song.id
       })
-      this.$refs.listContent.scrollToElement(this.$refs.list.$el.children[index], 300)
+      let currentSongDom = this.$refs.list.$el.children[index]
+      this.$refs.listContent.scrollToElement(
+        currentSongDom, 300)
     },
+    // 在列表中删除 指定歌曲
     deleteOne (item) {
       this.deleteSong(item)
+      // 如果没有歌曲 则隐藏
       if (!this.playlist.length) {
         this.hide()
       }
